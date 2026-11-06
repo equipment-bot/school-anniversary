@@ -1,6 +1,6 @@
 'use strict';
-const CACHE='anniversary-reg-v4';
-const FILES=['./','./index.html','./style.css?v=4','./core.js?v=4','./app.js?v=4','./manifest.webmanifest','./icon.svg','./merge.html','./merge.js?v=4','./merge-ui.js?v=4'];
+const CACHE='anniversary-reg-v5';
+const FILES=['./','./index.html','./style.css?v=5','./core.js?v=5','./app.js?v=5','./manifest.webmanifest','./icon.svg','./merge.html','./merge.js?v=5','./merge-ui.js?v=5'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET'||new URL(e.request.url).origin!==self.location.origin)return;e.respondWith(caches.open(CACHE).then(async c=>{const hit=await c.match(e.request);if(hit)return hit;try{return await fetch(e.request);}catch(error){if(e.request.mode==='navigate')return c.match('./index.html');throw error;}}));});
